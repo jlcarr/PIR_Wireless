@@ -39,12 +39,26 @@ The 433MHz transmitters and receivers are notoriously cheap and unreliable. ATTi
       - **Result**: The signal seems to be caught very reliably. There wasn't a single "UNKNOWN", and switching was right on target.
       - **Other Finding**: The 'delayMicroseconds' function does not seem to work on ATTiny85. Using it seems to make the chip behave strangely.
       - **Note**: This is the best reliability yet. There is probably method to make the period reading more robust.
+   - **Experiment #7**: Decoupling Transmitter and receiver circuits
+      - **Method**: Decoupled set-up from "Experiment #6". Used an opto-coupler (LTV4N35) to test de-coupled data transmission. Then switched to 433MHz set.
+      - **Result**: Opto-coupler worked as expected. Switching to the 433MHz receiver with an idicator LED seemed to work.
+      - **Note**: This is experiment was was originally performed because of the failure of "Experiment #6", and then re-doing "Experiment #5" with the actual 433MHz transmitter removed resulted in teh receiver still receiving the correct signal! This implies electrical noise, rather than transmission was responsible for the receiver's data output. 
+      - **Note**: See "Experiment #8" for range test.
+      - **Source**: https://www.instructables.com/4N35/
+- **Issue**: Wireless Range Is Low
+   - **Details**: Many sources say out-of-the-box the range is less than 1 meter.
 - **Issue**: Wireless Range Is Low
    - **Details**: Many sources say out-of-the-box the range is less than 1 meter.
    - **Solution**: Solder on an antena to the sender and receiver.
    - **Experiment #4**: Basic Range
       - **Method**: Use the set-up of the "Experiment #3". But put the receiver on a different breadboard, powed using 3 1.5V AA batteries. Walk away with receiver checking fidelity of data transfer.
       - **Result**: Fidelity seems to drop past 1 meter. Past 3 meters and around corner seems to only receive noise.
+   - **Experiment #6**: 10Hz Signal Range
+      - **Method**: Use the set-up of the "Experiment #5". But put the transmitter on a different breadboard, powed using 3 1.5V AA batteries. Walk away with receiver checking fidelity of data transfer.
+      - **Result**: Receiver does not seem to pick up its signal at all. Attaching the transmitter's breadboard to the Ardunio's 5V and GND lines (instead of the AA batteries) makes it able to transmit again. Transmitter LED was noticeably dimmer. Voltmeter said batteries were supplying 4.74V while the Arduino was supplying 5.02V.
+   - **Experiment #8**: Decoupled Range Test
+      - **Method**: Same as the wireless "Experiment #7".
+      - **Result**: Range seems to be about 30cm. This implies the longer results of "Experiment #4" are probably just noise (the exact 5V transmitter vs 4.75V transmitter is unlikely to make up much of the difference). 
 
 ## Resources
 ### Circuit Design
