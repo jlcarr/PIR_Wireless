@@ -73,6 +73,12 @@ The 433MHz transmitters and receivers are notoriously cheap and unreliable. ATTi
       - **Method**: Same as the wireless "Experiment #8". But change the number of components used (removing extraneous LEDs).
       - **Result**: Using fewer extraneous LEDs seems to improve the range and data fidelity. Not by a huge amount though.
 
+## Todo
+- Draw up the circuit diagram
+- Test with the antenna soldered
+- Look into improving data encoding
+- Get PIR working more consistently with the ATTiny85
+- Try a voltage regulator
 
 ## Resources
 ### Circuit Design
