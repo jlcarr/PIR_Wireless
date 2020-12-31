@@ -3,9 +3,12 @@ An Arduino/AVR based PIR sensor which transmits its readings wirelessly.
 
 ## Components List
    - 1x PIR sensor (Passive InfraRed sensor) (part #: HC-SR505)
-   - 1x AVR microcontroller (part #: ATTiny85)
+   - 2x AVR microcontroller (part #: ATTiny85)
    - 1x 433Mhz transmitter (part #: FS1000A)
    - 1x 433Mhz receiver (part #: MX-RM-5V)
+   - 1x blue LED
+   - 1x red LED
+
 
 ## Methodology/Build
 ### Arduino as ISP for ATTiny85
@@ -13,6 +16,13 @@ One easy and accessible way to program ATTiny85 microcontrollers is to use an Ar
 Instructions on how to set up an Arduino as ISP for an ATTiny85 are available from the following links:
 - http://highlowtech.org/?p=1706
 - http://highlowtech.org/?p=1695
+
+### Build
+#### Ideas/Notes
+- Use 2 LEDs on the receiver: 1 red indicating error in the connection. The other indicating a positive signal: This way all states of on/off/no-signal are encoded, and show a signal change.
+- Use 2 ATTiny85 as the transmitter and receiver. Simpler and cheaper hardware would be possible, but this is fast easy and still cheap. Also interesting to work with ATTiny and 433MHz RF.
+- Battery power should be useable for both the transmitter and receiver to make them portable.
+- Transfer everything from breadboard prototypes to soldered circuits (maybe PCBs). Use an 8 pin dip socket (and possibly other dip sockets) to allow testing of the ATTiny85s and circuit and avoid damage during soldering.
 
 
 ## Experiments
@@ -45,11 +55,11 @@ The 433MHz transmitters and receivers are notoriously cheap and unreliable. ATTi
       - **Note**: This is experiment was was originally performed because of the failure of "Experiment #6", and then re-doing "Experiment #5" with the actual 433MHz transmitter removed resulted in teh receiver still receiving the correct signal! This implies electrical noise, rather than transmission was responsible for the receiver's data output. 
       - **Note**: See "Experiment #8" for range test.
       - **Source**: https://www.instructables.com/4N35/
+   - **Research**: ATTiny85 Wireless
+      - **Finding**: Some sources write their own system like I did. Others use the manchester encoding library. However it seems this library doesn't work very well on ATTiny85, but perhaps with a different core will work (not sure what a core is). If I remember correctly past experiments showed manchester working, but not reliably.
 - **Issue**: Wireless Range Is Low
    - **Details**: Many sources say out-of-the-box the range is less than 1 meter.
-- **Issue**: Wireless Range Is Low
-   - **Details**: Many sources say out-of-the-box the range is less than 1 meter.
-   - **Solution**: Solder on an antena to the sender and receiver.
+   - **Solution**: Solder on an antena to the sender and receiver. Use higher voltage for the 433HMz transmitter (5V logic from the microcontroller should still work with it according to forums)
    - **Experiment #4**: Basic Range
       - **Method**: Use the set-up of the "Experiment #3". But put the receiver on a different breadboard, powed using 3 1.5V AA batteries. Walk away with receiver checking fidelity of data transfer.
       - **Result**: Fidelity seems to drop past 1 meter. Past 3 meters and around corner seems to only receive noise.
@@ -59,6 +69,10 @@ The 433MHz transmitters and receivers are notoriously cheap and unreliable. ATTi
    - **Experiment #8**: Decoupled Range Test
       - **Method**: Same as the wireless "Experiment #7".
       - **Result**: Range seems to be about 30cm. This implies the longer results of "Experiment #4" are probably just noise (the exact 5V transmitter vs 4.75V transmitter is unlikely to make up much of the difference). 
+   - **Experiment #9**: Fewer Components
+      - **Method**: Same as the wireless "Experiment #8". But change the number of components used (removing extraneous LEDs).
+      - **Result**: Using fewer extraneous LEDs seems to improve the range and data fidelity. Not by a huge amount though.
+
 
 ## Resources
 ### Circuit Design
@@ -68,6 +82,8 @@ The 433MHz transmitters and receivers are notoriously cheap and unreliable. ATTi
 - http://highlowtech.org/?p=1695
 ### 433MHz Radio Communication
 - https://lastminuteengineers.com/433mhz-rf-wireless-arduino-tutorial/
+- https://en.wikipedia.org/wiki/Amplitude-shift_keying
+- https://en.wikipedia.org/wiki/On%E2%80%93off_keying
 ### ATTiny85 AND 433MHz RF Modules
 - https://www.electronoobs.com/eng_arduino_tut45.php
 - https://aherrero.github.io/arduino/rf/2019/11/17/Radio-attiny.html

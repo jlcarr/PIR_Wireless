@@ -1,15 +1,15 @@
-#define RX_PIN 0
-#define ON_PIN 6
-#define ERROR_PIN 7
+#define RX_PIN 3
+#define ON_PIN 0
+#define ERROR_PIN 1
 
 
 int state = 0;
 unsigned long previousMillis = 0;
-unsigned long DELAY = 0;
+unsigned long period = 0;
 unsigned long switch_time = 0;
 
 void setup(){  
-  Serial.begin(9600);
+  //Serial.begin(9600);
   pinMode(RX_PIN, INPUT);
   pinMode(ON_PIN, OUTPUT);
   pinMode(ERROR_PIN, OUTPUT);  
@@ -20,24 +20,24 @@ void loop(){
   
   if(currentMillis - previousMillis >= 1000){
     previousMillis = currentMillis;
-    if(DELAY > 25 && DELAY < 75){
-      Serial.println("ON");
+    if(period > 25 && period < 75){
+      //Serial.println("ON");
       digitalWrite(ON_PIN,HIGH);
       digitalWrite(ERROR_PIN,LOW);
     }
-    else if (DELAY > 75 && DELAY < 125){
-      Serial.println("OFF");
+    else if (period > 75 && period < 125){
+      //Serial.println("OFF");
       digitalWrite(ON_PIN,LOW);
       digitalWrite(ERROR_PIN,LOW);
     }
     else{
-      Serial.println("UNKNOWN");
+      //Serial.println("UNKNOWN");
       digitalWrite(ON_PIN,LOW);
       digitalWrite(ERROR_PIN,HIGH);
     }
-    Serial.println("Current");
-    Serial.println(DELAY);
-    Serial.println(state);
+    //Serial.println("Current");
+    //Serial.println(DELAY);
+    //Serial.println(state);
   }
   
   if(digitalRead(RX_PIN) && state == 0){
@@ -46,7 +46,7 @@ void loop(){
   }
   else if(!digitalRead(RX_PIN) && state != 0){
     state = 0;
-    DELAY = millis() - switch_time;
+    period = millis() - switch_time;
   }
   
 }
